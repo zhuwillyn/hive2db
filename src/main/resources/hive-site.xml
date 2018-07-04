@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>javax.jdo.option.ConnectionURL</name>
+        <value>jdbc:mysql://BDPNode1:3306/sparkmetadata?createDatabaseIfNotExist=true&amp;characterEncoding=latin1
+        </value>
+        <description>JDBC connect string for a JDBC metastore</description>
+    </property>
+
+    <property>
+        <name>javax.jdo.option.ConnectionDriverName</name>
+        <value>org.mariadb.jdbc.Driver</value>
+        <description>Driver class name for a JDBC metastore</description>
+    </property>
+
+    <property>
+        <name>javax.jdo.option.ConnectionUserName</name>
+        <value>sparkmetadata</value>
+        <description>username to use against metastore database</description>
+    </property>
+
+    <property>
+        <name>javax.jdo.option.ConnectionPassword</name>
+        <value>qazxdr</value>
+        <description>password to use against metastore database</description>
+    </property>
+
+    <property>
+        <name>hive.metastore.warehouse.dir</name>
+        <value>hdfs://cluster1/home/spark-warehouse</value>
+        <description>location of default database for the warehouse, it equals to spark.sql.warehouse.dir</description>
+    </property>
+    <property>
+        <name>hbase.zookeeper.quorum</name>
+        <value>BDPNode1:2181,BDPNode2:2181,BDPNode3:2181</value>
+    </property>
+    <property>
+        <name>hive.metastore.uris</name>
+        <value>thrift://BDPNode1:9083</value>
+    </property>
+</configuration>

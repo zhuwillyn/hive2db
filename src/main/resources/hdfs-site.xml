@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+        <property>
+                <name>dfs.namenode.name.dir</name>
+                <value>/home/hadoop/data/hdfs/name</value>
+        </property>
+        <property>
+                <name>dfs.datanode.data.dir</name>
+                <value>/home/hadoop/data/hdfs/data</value>
+        </property>
+        <property>
+                <name>dfs.journalnode.edits.dir</name>
+                <value>/home/hadoop/data/hdfs/edits</value>
+        </property>
+        <!-- 指定JournalNode集群在对nameNode的目录进行共享时，自己存储数据的磁盘路径 -->
+        <property>
+                <name>dfs.replication</name>  
+                <value>3</value>  
+        </property>
+        <!-- 数据块副本数为3 -->  
+        <property>  
+                <name>dfs.permissions</name>  
+                <value>false</value>
+        </property>
+        <property>
+                <name>dfs.permissions.enabled</name>  
+                <value>false</value>
+        </property>  
+        <!-- 开启权限验证 -->
+        <property>  
+                <name>dfs.nameservices</name>  
+                <value>cluster1</value>
+        </property>  
+        <!-- 命名空间，它的值与fs.defaultFS的值要对应，namenode高可用之后有两个namenode，cluster1是对外提供的统一入口 -->
+        <property>  
+                <name>dfs.ha.namenodes.cluster1</name>
+                <value>BDPNode1,BDPNode2</value>  
+        </property>  
+        <!-- 指定 nameService 是 cluster1 时的nameNode有哪些，这里的值也是逻辑名称，名字随便起，相互不重复即可 -->
+        <property>  
+                <name>dfs.namenode.rpc-address.cluster1.BDPNode1</name>
+                <value>BDPNode1:9000</value>  
+        </property>  
+        <!-- BDPNode1 rpc地址 -->  
+        <property>  
+                <name>dfs.namenode.http-address.cluster1.BDPNode1</name>
+                <value>BDPNode1:50070</value>  
+        </property>  
+        <!-- BDPNode1 http地址 -->  
+        <property>  
+                <name>dfs.namenode.rpc-address.cluster1.BDPNode2</name>
+                <value>BDPNode2:9000</value>  
+        </property>  
+        <!-- BDPNode2 rpc地址 -->  
+        <property>  
+                <name>dfs.namenode.http-address.cluster1.BDPNode2</name>
+                <value>BDPNode2:50070</value>  
+        </property>  
+        <!-- BDPNode2 http地址 -->  
+        <property>  
+                <name>dfs.ha.automatic-failover.enabled</name>  
+                <value>true</value>  
+        </property>  
+        <!-- 启动故障自动恢复 -->  
+        <property>  
+                <name>dfs.namenode.shared.edits.dir</name>  
+                <value>qjournal://BDPNode1:8485;BDPNode2:8485;BDPNode3:8485;BDPNode4:8485;BDPNode5:8485/cluster1</value>
+        </property>  
+        <!-- 指定journal -->  
+        <property>  
+                <name>dfs.client.failover.proxy.provider.cluster1</name>
+                <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>  
+        </property>
+        <!-- 指定 cluster1 出故障时，哪个实现类负责执行故障切换 -->
+        <property>  
+                <name>dfs.ha.fencing.methods</name>  
+                <value>shell(/bin/true)</value>  
+        </property>  
+        <property>  
+        <name>dfs.ha.fencing.ssh.private-key-files</name>  
+        <value>/home/hadoop/.ssh/id_rsa</value>  
+        </property>  
+        <property>  
+        <name>dfs.ha.fencing.ssh.connect-timeout</name>  
+        <value>10000</value>  
+        </property>  
+        <!-- 脑裂默认配置 -->  
+        <property>  
+                <name>dfs.namenode.handler.count</name>  
+                <value>100</value>  
+        </property>
+        <property>
+            <name>dfs.qjournal.start-segment.timeout.ms</name>
+            <value>180000</value>
+        </property>
+        <property>
+            <name>dfs.qjournal.select-input-streams.timeout.ms</name>
+            <value>180000</value>
+        </property>
+        <property>
+            <name>dfs.qjournal.write-txns.timeout.ms</name>
+            <value>180000</value>
+        </property>
+        <!-- 以上三个参数都是为了解决：因为gc运行而使得journalnode的操作超时的（默认是20秒，现在改为180秒） -->
+</configuration>
