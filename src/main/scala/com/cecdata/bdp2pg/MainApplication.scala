@@ -56,13 +56,13 @@ object MainApplication {
             // 当输入参数为空或者"-h" "--help"时打印帮助信息
             commandLine = parser.parse(options, args)
             if (commandLine.hasOption(Constants.Help.Short.HELP) || commandLine.getOptions().length == 0) {
-                helpFormatter.printHelp("java -jar ***.jar", options, true)
+                helpFormatter.printHelp("java -jar bdp2pg-1.0.jar", options, true)
                 System.exit(-1)
             }
         } catch {
             case ex: ParseException => {
                 println(ex.getMessage)
-                helpFormatter.printHelp("java -jar ***.jar", options, true)
+                helpFormatter.printHelp("java -jar bdp2pg-1.0.jar", options, true)
                 System.exit(-1)
             }
             case e: Exception => {
@@ -80,7 +80,8 @@ object MainApplication {
             params.put(shortOpt, value)
         }
         val launcher: SparkMainLauncher = new SparkMainLauncher(params)
-        // launcher.launch()
+        // 启动spark job
+        launcher.launch()
     }
 
 }

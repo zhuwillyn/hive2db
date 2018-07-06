@@ -23,6 +23,7 @@ import scala.util.control.Breaks._
 class SparkMainLauncher(val params: mutable.HashMap[String, String]) {
 
     def launch(): Unit = {
+        // 此为本地local模式，若需运行在集群或者yarn上，需要修改
         val session: SparkSession = SparkSession.builder()
             .appName("LoadHive2MySQL").enableHiveSupport()
             .master("local").getOrCreate()
