@@ -28,11 +28,11 @@ class SparkMainLauncher(val params: mutable.HashMap[String, String]) {
             .appName("LoadHive2MySQL").enableHiveSupport()
             .master("local").getOrCreate()
 
-        val hiveDatabase: String = params(Constants.Help.Short.HIVE_DATABASE)
-        val hiveTable: String = params(Constants.Help.Short.HIVE_TABLE)
-        val hospitalCode: String = params(Constants.Help.Short.HOSPITAL_CODE)
-        val username: String = params(Constants.Help.Short.USERNAME)
-        val password: String = params(Constants.Help.Short.PASSWORD)
+        val hiveDatabase: String = params.getOrElse(Constants.Help.Short.HIVE_DATABASE, null)
+        val hiveTable: String = params.getOrElse(Constants.Help.Short.HIVE_TABLE, null)
+        val hospitalCode: String = params.getOrElse(Constants.Help.Short.HOSPITAL_CODE, null)
+        val username: String = params.getOrElse(Constants.Help.Short.USERNAME, null)
+        val password: String = params.getOrElse(Constants.Help.Short.PASSWORD, null)
         val url: String = params(Constants.Help.Short.URL)
         // 若传入的hive数据库名不为空则切换到该库，否则使用默认default库
         if (StringUtils.isNotEmpty(hiveDatabase)) {

@@ -2,4 +2,4 @@
 target/
 *.iml
 *.class
-Test.scala
+src/main/scala/Test.scala

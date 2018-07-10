@@ -3,6 +3,7 @@ package com.cecdata.bdp2pg
 import com.cecdata.bdp2pg.spark.SparkMainLauncher
 import com.cecdata.bdp2pg.common._
 import org.apache.commons.cli._
+import org.slf4j.{LoggerFactory, Logger}
 
 import scala.collection.mutable
 
@@ -24,7 +25,7 @@ object MainApplication {
         options.addOption(help)
         // 抽取源数据的hive数据库名称
         val hiveDatabase = new Option(Constants.Help.Short.HIVE_DATABASE, Constants.Help.Long.HIVE_DATABASE, true, "The database of hive.")
-        hiveDatabase.setRequired(true)
+        hiveDatabase.setRequired(false)
         options.addOption(hiveDatabase)
         // 抽取源数据指定医院代码，多个医院用英文逗号隔开
         val codes = new Option(Constants.Help.Short.HOSPITAL_CODE, Constants.Help.Long.HOSPITAL_CODE, true, "The codes of hospital, multi code split by ','.")
@@ -73,7 +74,7 @@ object MainApplication {
         // 将参数解析并封装至map中传递给spark job具体执行类
         val params = new mutable.HashMap[String, String]()
         val opts: Array[Option] = commandLine.getOptions
-        for (opt <- opts){
+        for (opt <- opts) {
             val shortOpt: String = opt.getOpt
             // val longOpt: String = opt.getLongOpt
             val value: String = opt.getValue
